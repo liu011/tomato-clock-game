@@ -1,0 +1,2 @@
+export const UPDATE_COINS = "UPDATE_COINS"
+export const UPDATE_STATUS = "UPDATE_STATUS"
