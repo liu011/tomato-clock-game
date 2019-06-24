@@ -2,6 +2,7 @@ import { ComponentClass } from "react"
 import Taro, { Component } from "@tarojs/taro"
 import { AtToast } from "taro-ui"
 import { connect } from "@tarojs/redux"
+import { isNil } from "lodash"
 import { View, Button, Picker, Image } from "@tarojs/components"
 import { onUpdateCoins, onUpdateStatus } from "../../actions/updateGameStatus"
 import { onCalculateFruitValue, onCalculateIngredientExpense } from "../../actions/calculateValue"
@@ -44,6 +45,7 @@ type PageState = {
   isOnStartDisabled: boolean
   isOnEndDisabled: boolean
   povertyAlert: boolean
+  harvestAlert: boolean
   selectorA: string[]
   selectorB: string[]
   selectorC: string[]
@@ -86,6 +88,7 @@ class Index extends Component {
       isOnStartDisabled: true,
       isOnEndDisabled: true,
       povertyAlert: false,
+      harvestAlert: false,
       selectorA: this.props.calculateValueReducer.optionsA.map(option => option.name),
       selectorB: this.props.calculateValueReducer.optionsB.map(option => option.name),
       selectorC: this.props.calculateValueReducer.optionsC.map(option => option.name),
@@ -168,6 +171,12 @@ class Index extends Component {
     if (this.props.updateGameStatusReducer.status === "completed") {
       const fruit = this.props.calculateValueReducer.thisFruit
       this.props.onUpdateCoins(fruit.value)
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          harvestAlert: true,
+        }
+      })
     }
     this.props.onUpdateStatus("ready")
     this.setState(
@@ -288,6 +297,10 @@ class Index extends Component {
           />
         </View>
         <AtToast isOpened={this.state.povertyAlert} text={`原材料需要${ingredientExpense}金币，金币不够啦！`} />
+        <AtToast
+          isOpened={this.state.harvestAlert}
+          text={!isNil(thisFruit) ? `成功收获一枚${thisFruit.name}，获得${thisFruit.value}点能量！` : ""}
+        />
         <View className='image-container'>
           <Image
             style='width: 200px;height: 200px;background: #fff;'
