@@ -5,7 +5,7 @@ import { connect } from "@tarojs/redux"
 import { isNil } from "lodash"
 import { View, Button, Picker, Image } from "@tarojs/components"
 import { onUpdateCoins, onUpdateStatus } from "../../actions/updateGameStatus"
-import { onCalculateFruitValue, onCalculateIngredientExpense } from "../../actions/calculateValue"
+import { onCalculateFruitValue, onCalculateIngredientExpense, onUpdateOwnedFruit } from "../../actions/calculateValue"
 import Countdown from "../../components/countdown"
 import { Fruit, IngredientOption } from "../../types/type"
 
@@ -14,6 +14,7 @@ import waterIcon from "../../assets/water.png"
 import earthIcon from "../../assets/earth.png"
 import energyIcon from "../../assets/energy.png"
 import growing from "../../assets/growing.png"
+import library from "../../assets/library.png"
 
 import "./index.less"
 
@@ -37,6 +38,7 @@ type PageDispatchProps = {
   onUpdateStatus: (newStatus: string) => void
   onCalculateFruitValue: (selectorCheckedA: string, selectorCheckedB: string, selectorCheckedC: string) => Fruit
   onCalculateIngredientExpense: (selectorCheckedA: string, selectorCheckedB: string, selectorCheckedC: string) => number
+  onUpdateOwnedFruit: (fruitId: number) => void
 }
 
 type PageOwnProps = {}
@@ -78,6 +80,9 @@ interface Index {
     },
     onCalculateIngredientExpense(selectorCheckedA: string, selectorCheckedB: string, selectorCheckedC: string) {
       dispatch(onCalculateIngredientExpense(selectorCheckedA, selectorCheckedB, selectorCheckedC))
+    },
+    onUpdateOwnedFruit(fruitId: number) {
+      dispatch(onUpdateOwnedFruit(fruitId))
     },
   })
 )
@@ -171,6 +176,7 @@ class Index extends Component {
     if (this.props.updateGameStatusReducer.status === "completed") {
       const fruit = this.props.calculateValueReducer.thisFruit
       this.props.onUpdateCoins(fruit.value)
+      this.props.onUpdateOwnedFruit(fruit.id)
       this.setState(prevState => {
         return {
           ...prevState,
@@ -241,6 +247,12 @@ class Index extends Component {
     )
   }
 
+  onNavigateToLibrary = () => {
+    Taro.navigateTo({
+      url: "/pages/library/index",
+    })
+  }
+
   render() {
     const { coins, status } = this.props.updateGameStatusReducer
     const { thisFruit, ingredientExpense } = this.props.calculateValueReducer
@@ -280,9 +292,14 @@ class Index extends Component {
             </Picker>
           </View>
         </View>
-        <View className='coin-container'>
-          <Image className='icon' src={energyIcon} />
-          能量: {coins}
+        <View className='status-container'>
+          <View className='coin-container'>
+            <Image className='icon' src={energyIcon} />
+            能量: {coins}
+          </View>
+          <View className='library-container' onClick={this.onNavigateToLibrary}>
+            <Image className='library' src={library} />
+          </View>
         </View>
         <View className='text-container'>
           <Image
@@ -302,10 +319,7 @@ class Index extends Component {
           text={!isNil(thisFruit) ? `成功收获一枚${thisFruit.name}，获得${thisFruit.value}点能量！` : ""}
         />
         <View className='image-container'>
-          <Image
-            style='width: 200px;height: 200px;background: #fff;'
-            src={status === "completed" ? `https://${thisFruit.image}` : growing}
-          />
+          <Image className='image' src={status === "completed" ? `https://${thisFruit.image}` : growing} />
         </View>
         <Countdown />
         <View className='button-container'>

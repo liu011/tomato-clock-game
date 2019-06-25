@@ -16,7 +16,7 @@ store.subscribe(() => {
 
 class App extends Component {
   config: Config = {
-    pages: ["pages/index/index"],
+    pages: ["pages/index/index", "pages/library/index"],
     window: {
       navigationBarBackgroundColor: "transparent",
       navigationBarTitleText: "Tomato-App",

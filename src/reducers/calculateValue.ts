@@ -1,4 +1,4 @@
-import { CALCULATE_FRUIT_VALUE, CALCULATE_INGREDIENT_EXPENSE } from "../constants/calculateValue"
+import { CALCULATE_FRUIT_VALUE, CALCULATE_INGREDIENT_EXPENSE, UPDATE_OWNED_FRUIT } from "../constants/calculateValue"
 import { Fruit } from "../types/type"
 
 const INIT_STATE = {
@@ -22,74 +22,104 @@ const INIT_STATE = {
   ],
   fruits: [
     {
+      id: 0,
       name: "红色的番茄",
       value: 1,
       formula: ["阳光", "雨水", "普通泥土"],
       image:
         "timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561205993097&di=a2a448f95450a998e2eb57c816a0bf82&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F02%2F62%2F62%2F59fc519e871ab_610.jpg",
+      owned: false,
+      description: "这是一只又红又大又圆又好吃的番茄。这是一只又红又大又圆又好吃的番茄。",
     },
     {
+      id: 1,
       name: "果实02",
       value: 2,
       formula: ["a02", "b01", "c01"],
       image:
         "timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561205993097&di=a2a448f95450a998e2eb57c816a0bf82&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F02%2F62%2F62%2F59fc519e871ab_610.jpg",
+      owned: false,
+      description: "这是一只又红又大又圆又好吃的番茄。这是一只又红又大又圆又好吃的番茄。",
     },
     {
+      id: 2,
       name: "果实03",
       value: 3,
       formula: ["a01", "b02", "c01"],
       image:
         "timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561205993097&di=a2a448f95450a998e2eb57c816a0bf82&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F02%2F62%2F62%2F59fc519e871ab_610.jpg",
+      owned: false,
+      description: "这是一只又红又大又圆又好吃的番茄。这是一只又红又大又圆又好吃的番茄。",
     },
     {
+      id: 3,
       name: "果实04",
       value: 4,
       formula: ["a01", "b01", "c02"],
       image:
         "timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561205993097&di=a2a448f95450a998e2eb57c816a0bf82&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F02%2F62%2F62%2F59fc519e871ab_610.jpg",
+      owned: false,
+      description: "这是一只又红又大又圆又好吃的番茄。这是一只又红又大又圆又好吃的番茄。",
     },
     {
+      id: 4,
       name: "果实05",
       value: 5,
       formula: ["a01", "b01", "c01"],
       image:
         "timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561205993097&di=a2a448f95450a998e2eb57c816a0bf82&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F02%2F62%2F62%2F59fc519e871ab_610.jpg",
+      owned: false,
+      description: "这是一只又红又大又圆又好吃的番茄。这是一只又红又大又圆又好吃的番茄。",
     },
     {
+      id: 5,
       name: "果实06",
       value: 6,
       formula: ["a02", "b02", "c01"],
       image:
         "timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561205993097&di=a2a448f95450a998e2eb57c816a0bf82&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F02%2F62%2F62%2F59fc519e871ab_610.jpg",
+      owned: false,
+      description: "这是一只又红又大又圆又好吃的番茄。这是一只又红又大又圆又好吃的番茄。",
     },
     {
+      id: 6,
       name: "果实07",
       value: 7,
       formula: ["a02", "b01", "c02"],
       image:
         "timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561205993097&di=a2a448f95450a998e2eb57c816a0bf82&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F02%2F62%2F62%2F59fc519e871ab_610.jpg",
+      owned: false,
+      description: "这是一只又红又大又圆又好吃的番茄。这是一只又红又大又圆又好吃的番茄。",
     },
     {
+      id: 7,
       name: "果实08",
       value: 8,
       formula: ["a02", "b01", "c01"],
       image:
         "timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561205993097&di=a2a448f95450a998e2eb57c816a0bf82&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F02%2F62%2F62%2F59fc519e871ab_610.jpg",
+      owned: false,
+      description: "这是一只又红又大又圆又好吃的番茄。这是一只又红又大又圆又好吃的番茄。",
     },
     {
+      id: 8,
       name: "果实09",
       value: 9,
       formula: ["a01", "b02", "c01"],
       image:
         "timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561205993097&di=a2a448f95450a998e2eb57c816a0bf82&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F02%2F62%2F62%2F59fc519e871ab_610.jpg",
+      owned: false,
+      description: "这是一只又红又大又圆又好吃的番茄。这是一只又红又大又圆又好吃的番茄。",
     },
     {
+      id: 9,
       name: "果实10",
       value: 10,
       formula: ["a01", "b01", "c02"],
       image:
         "timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1561205993097&di=a2a448f95450a998e2eb57c816a0bf82&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F02%2F62%2F62%2F59fc519e871ab_610.jpg",
+      owned: false,
+      description: "这是一只又红又大又圆又好吃的番茄。这是一只又红又大又圆又好吃的番茄。",
     },
   ],
 }
@@ -131,6 +161,10 @@ const calculateValueReducer = (state = INIT_STATE, action) => {
         ...state,
         ingredientExpense: cost,
       }
+    case UPDATE_OWNED_FRUIT:
+      const id = action.payload
+      state.fruits[id].owned = true
+      return state
     default:
       return state
   }
