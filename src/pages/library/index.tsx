@@ -64,7 +64,7 @@ class Library extends Component {
             <Image
               className='image-info'
               src={
-                this.state.chosenFruit
+                this.state.chosenFruit && this.state.chosenFruit.owned
                   ? `https://${this.state.chosenFruit.image}`
                   : "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=679881927,2934882074&fm=115&gp=0.jpg"
               }
@@ -73,19 +73,21 @@ class Library extends Component {
           <View className='detail-info'>
             <View>
               <Text className='bold-text'>名字：</Text>
-              {this.state.chosenFruit ? this.state.chosenFruit.name : ""}
+              {this.state.chosenFruit && this.state.chosenFruit.owned ? this.state.chosenFruit.name : "???"}
             </View>
             <View>
               <Text className='bold-text'>价值：</Text>
-              {this.state.chosenFruit ? this.state.chosenFruit.value : ""}
+              {this.state.chosenFruit && this.state.chosenFruit.owned ? this.state.chosenFruit.value : "???"}
             </View>
             <View>
               <Text className='bold-text'>配方：</Text>
-              {this.state.chosenFruit ? this.state.chosenFruit.formula.join("、") : ""}
+              {this.state.chosenFruit && this.state.chosenFruit.owned
+                ? this.state.chosenFruit.formula.join("、")
+                : "???"}
             </View>
             <View>
               <Text className='bold-text'>描述：</Text>
-              {this.state.chosenFruit ? this.state.chosenFruit.description : ""}
+              {this.state.chosenFruit && this.state.chosenFruit.owned ? this.state.chosenFruit.description : "???"}
             </View>
           </View>
         </View>

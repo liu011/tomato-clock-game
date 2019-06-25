@@ -48,6 +48,7 @@ type PageState = {
   isOnEndDisabled: boolean
   povertyAlert: boolean
   harvestAlert: boolean
+  badTomatoAlert: boolean
   selectorA: string[]
   selectorB: string[]
   selectorC: string[]
@@ -94,6 +95,7 @@ class Index extends Component {
       isOnEndDisabled: true,
       povertyAlert: false,
       harvestAlert: false,
+      badTomatoAlert: false,
       selectorA: this.props.calculateValueReducer.optionsA.map(option => option.name),
       selectorB: this.props.calculateValueReducer.optionsB.map(option => option.name),
       selectorC: this.props.calculateValueReducer.optionsC.map(option => option.name),
@@ -108,6 +110,48 @@ class Index extends Component {
     console.log(this.props, nextProps)
   }
   */
+  badTomato = false
+  componentDidHide() {
+    if (this.props.updateGameStatusReducer.status === "running") {
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          harvestAlert: false,
+          badTomatoAlert: false,
+        }
+      })
+      this.badTomato = true
+    } else {
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          harvestAlert: false,
+          badTomatoAlert: false,
+        }
+      })
+    }
+  }
+  componentDidShow() {
+    if (this.badTomato) {
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          badTomatoAlert: true,
+        }
+      })
+    }
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        isOnStartDisabled: true,
+        isOnEndDisabled: true,
+        selectorCheckedA: "",
+        selectorCheckedB: "",
+        selectorCheckedC: "",
+      }
+    })
+    this.props.onUpdateStatus("ready")
+  }
 
   checkButton = () => {
     if (
@@ -115,29 +159,25 @@ class Index extends Component {
       this.state.selectorCheckedB.length > 0 &&
       this.state.selectorCheckedC.length > 0
     ) {
-      this.setState(
-        prevState => {
-          return {
-            ...prevState,
-            isOnStartDisabled: false,
-            isOnEndDisabled: true,
-          }
-        },
-        () => console.log(this.state)
-      )
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          isOnStartDisabled: false,
+          isOnEndDisabled: true,
+        }
+      })
     }
   }
 
   changePovertyAlert = (isOpenAlert: boolean) => {
-    this.setState(
-      prevState => {
-        return {
-          ...prevState,
-          povertyAlert: isOpenAlert,
-        }
-      },
-      () => console.log(this.state)
-    )
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        povertyAlert: isOpenAlert,
+        harvestAlert: false,
+        badTomatoAlert: false,
+      }
+    })
   }
 
   onStart = () => {
@@ -155,21 +195,19 @@ class Index extends Component {
       return
     }
     this.props.onUpdateStatus("start")
-    this.setState(
-      prevState => {
-        return {
-          ...prevState,
-          isOnStartDisabled: true,
-          isOnEndDisabled: false,
-        }
-      },
-      () => console.log(this.state)
-    )
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        isOnStartDisabled: true,
+        isOnEndDisabled: false,
+      }
+    })
     this.props.onCalculateFruitValue(
       this.state.selectorCheckedA,
       this.state.selectorCheckedB,
       this.state.selectorCheckedC
     )
+    this.badTomato = false
   }
 
   onEnd = () => {
@@ -183,21 +221,21 @@ class Index extends Component {
           harvestAlert: true,
         }
       })
+    } else {
+      this.badTomato = true
     }
     this.props.onUpdateStatus("ready")
-    this.setState(
-      prevState => {
-        return {
-          ...prevState,
-          isOnStartDisabled: true,
-          isOnEndDisabled: true,
-          selectorCheckedA: "",
-          selectorCheckedB: "",
-          selectorCheckedC: "",
-        }
-      },
-      () => console.log(this.state)
-    )
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        isOnStartDisabled: true,
+        isOnEndDisabled: true,
+        selectorCheckedA: "",
+        selectorCheckedB: "",
+        selectorCheckedC: "",
+        badTomatoAlert: this.badTomato,
+      }
+    })
   }
 
   onChangeA = (e: { detail: { value: string | number } }) => {
@@ -211,7 +249,6 @@ class Index extends Component {
       () => {
         this.changePovertyAlert(false)
         this.checkButton()
-        console.log(this.state)
       }
     )
   }
@@ -227,7 +264,6 @@ class Index extends Component {
       () => {
         this.changePovertyAlert(false)
         this.checkButton()
-        console.log(this.state)
       }
     )
   }
@@ -242,7 +278,6 @@ class Index extends Component {
       () => {
         this.changePovertyAlert(false)
         this.checkButton()
-        console.log(this.state)
       }
     )
   }
@@ -301,6 +336,12 @@ class Index extends Component {
             <Image className='library' src={library} />
           </View>
         </View>
+        <AtToast isOpened={this.state.povertyAlert} text={`原材料需要${ingredientExpense}金币，金币不够啦！`} />
+        <AtToast
+          isOpened={this.state.harvestAlert}
+          text={!isNil(thisFruit) ? `成功收获一枚${thisFruit.name}，获得${thisFruit.value}点能量！` : ""}
+        />
+        <AtToast isOpened={this.state.badTomatoAlert} text='番茄枯萎了' />
         <View className='text-container'>
           <Image
             className='slogan'
@@ -313,11 +354,6 @@ class Index extends Component {
             src='http://www.diyiziti.com/Res/Images//Temp/513/ce3f908a349b473d8c0174f47aa8f384.PNG'
           />
         </View>
-        <AtToast isOpened={this.state.povertyAlert} text={`原材料需要${ingredientExpense}金币，金币不够啦！`} />
-        <AtToast
-          isOpened={this.state.harvestAlert}
-          text={!isNil(thisFruit) ? `成功收获一枚${thisFruit.name}，获得${thisFruit.value}点能量！` : ""}
-        />
         <View className='image-container'>
           <Image className='image' src={status === "completed" ? `https://${thisFruit.image}` : growing} />
         </View>
