@@ -110,6 +110,7 @@ class Index extends Component {
     console.log(this.props, nextProps)
   }
   */
+  /*
   badTomato = false
   componentDidHide() {
     if (this.props.updateGameStatusReducer.status === "running") {
@@ -152,7 +153,7 @@ class Index extends Component {
     })
     this.props.onUpdateStatus("ready")
   }
-
+  */
   checkButton = () => {
     if (
       this.state.selectorCheckedA.length > 0 &&
@@ -207,7 +208,7 @@ class Index extends Component {
       this.state.selectorCheckedB,
       this.state.selectorCheckedC
     )
-    this.badTomato = false
+    //this.badTomato = false
   }
 
   onEnd = () => {
@@ -222,7 +223,13 @@ class Index extends Component {
         }
       })
     } else {
-      this.badTomato = true
+      //this.badTomato = true
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          badTomatoAlert: true,
+        }
+      })
     }
     this.props.onUpdateStatus("ready")
     this.setState(prevState => {
@@ -233,7 +240,6 @@ class Index extends Component {
         selectorCheckedA: "",
         selectorCheckedB: "",
         selectorCheckedC: "",
-        badTomatoAlert: this.badTomato,
       }
     })
   }

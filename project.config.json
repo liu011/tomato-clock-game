@@ -2,7 +2,7 @@
 	"miniprogramRoot": "dist/",
 	"projectname": "tomatoApp",
 	"description": "tomato-clock",
-	"appid": "touristappid",
+	"appid": "wx2f2809ea15e1fb13",
 	"setting": {
 		"urlCheck": true,
 		"es6": false,
