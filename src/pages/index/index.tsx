@@ -1,6 +1,6 @@
 import { ComponentClass } from "react"
 import Taro, { Component } from "@tarojs/taro"
-import { AtToast } from "taro-ui"
+import { AtToast, AtCurtain } from "taro-ui"
 import { connect } from "@tarojs/redux"
 import { isNil } from "lodash"
 import { View, Button, Picker, Image } from "@tarojs/components"
@@ -9,12 +9,15 @@ import { onCalculateFruitValue, onCalculateIngredientExpense, onUpdateOwnedFruit
 import Countdown from "../../components/countdown"
 import { Fruit, IngredientOption } from "../../types/type"
 
-import sunshineIcon from "../../assets/sunshine.png"
+import seedIcon from "../../assets/seed.png"
 import waterIcon from "../../assets/water.png"
 import earthIcon from "../../assets/earth.png"
 import energyIcon from "../../assets/energy.png"
 import growing from "../../assets/growing.png"
 import library from "../../assets/library.png"
+import tutorial from "../../assets/tutorial.png"
+import slogan1 from "../../assets/slogan1.png"
+import slogan2 from "../../assets/slogan2.png"
 
 import "./index.less"
 
@@ -49,6 +52,7 @@ type PageState = {
   povertyAlert: boolean
   harvestAlert: boolean
   badTomatoAlert: boolean
+  tutorialCurtain: boolean
   selectorA: string[]
   selectorB: string[]
   selectorC: string[]
@@ -96,6 +100,7 @@ class Index extends Component {
       povertyAlert: false,
       harvestAlert: false,
       badTomatoAlert: false,
+      tutorialCurtain: false,
       selectorA: this.props.calculateValueReducer.optionsA.map(option => option.name),
       selectorB: this.props.calculateValueReducer.optionsB.map(option => option.name),
       selectorC: this.props.calculateValueReducer.optionsC.map(option => option.name),
@@ -294,6 +299,24 @@ class Index extends Component {
     })
   }
 
+  onOpenTutorial() {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        tutorialCurtain: true,
+      }
+    })
+  }
+
+  onCloseTutorial() {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        tutorialCurtain: false,
+      }
+    })
+  }
+
   render() {
     const { coins, status } = this.props.updateGameStatusReducer
     const { thisFruit, ingredientExpense } = this.props.calculateValueReducer
@@ -304,10 +327,10 @@ class Index extends Component {
             <Picker mode='selector' range={this.state.selectorA} onChange={this.onChangeA} value={0}>
               <View className='picker'>
                 <View className='select-button'>
-                  <Image className='icon' src={sunshineIcon} />
+                  <Image className='icon' src={seedIcon} />
                 </View>
                 <View className='selected-item'>
-                  {this.state.selectorCheckedA ? this.state.selectorCheckedA : "选择光照"}
+                  {this.state.selectorCheckedA ? this.state.selectorCheckedA : "选择种子"}
                 </View>
               </View>
             </Picker>
@@ -338,10 +361,24 @@ class Index extends Component {
             <Image className='icon' src={energyIcon} />
             能量: {coins}
           </View>
-          <View className='library-container' onClick={this.onNavigateToLibrary}>
-            <Image className='library' src={library} />
+          <View className='icons-container'>
+            <View className='library-container' onClick={this.onOpenTutorial.bind(this)}>
+              <View className='library-icon'>
+                <Image className='tutorial' src={tutorial} />
+              </View>
+              <View className='library-text'>新手教程</View>
+            </View>
+            <View className='library-container' onClick={this.onNavigateToLibrary}>
+              <View className='library-icon'>
+                <Image className='library' src={library} />
+              </View>
+              <View className='library-text'>图鉴</View>
+            </View>
           </View>
         </View>
+        <AtCurtain isOpened={this.state.tutorialCurtain} onClose={this.onCloseTutorial.bind(this)}>
+          <Image src='http://img1.imgtn.bdimg.com/it/u=2178235260,155430877&fm=15&gp=0.jpg' />
+        </AtCurtain>
         <AtToast isOpened={this.state.povertyAlert} text={`原材料需要${ingredientExpense}金币，金币不够啦！`} />
         <AtToast
           isOpened={this.state.harvestAlert}
@@ -349,16 +386,10 @@ class Index extends Component {
         />
         <AtToast isOpened={this.state.badTomatoAlert} text='番茄枯萎了' />
         <View className='text-container'>
-          <Image
-            className='slogan'
-            src='http://www.diyiziti.com/Res/Images//Temp/513/edbf73fe3e484eddb6839619093e08b5.PNG'
-          />
+          <Image className='slogan1' src={slogan1} />
         </View>
         <View className='text-container'>
-          <Image
-            className='slogan'
-            src='http://www.diyiziti.com/Res/Images//Temp/513/ce3f908a349b473d8c0174f47aa8f384.PNG'
-          />
+          <Image className='slogan2' src={slogan2} />
         </View>
         <View className='image-container'>
           <Image className='image' src={status === "completed" ? `https://${thisFruit.image}` : growing} />

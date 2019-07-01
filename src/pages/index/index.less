@@ -1,5 +1,5 @@
 .index {
-  margin-top: 20px;
+  margin-top: 10px;
 
   .selector-container {
     display: flex;
@@ -55,22 +55,46 @@
         background: transparent;
       }
     }
-    .library-container {
-      padding: 5px 15px;
-      border-radius: 60px;
-      box-shadow: 2px 3px 3px 2px #c9c8c8;
-      font-size: 40px;
-      text-align: center;
-      .library {
-        height: 80px;
-        width: 80px;
-        transform: translateY(8px);
+    .icons-container {
+      display: flex;
+      flex-direction: row;
+      .library-container {
+        margin-left: 20px;
+        .library-icon {
+          padding: 5px 15px;
+          border-radius: 60px;
+          box-shadow: 2px 3px 3px 2px #c9c8c8;
+          font-size: 40px;
+          text-align: center;
+          .library {
+            height: 80px;
+            width: 80px;
+            transform: translateY(8px);
+          }
+          .tutorial {
+            height: 65px;
+            width: 58px;
+            transform: translateY(8px);
+            padding: 9px 0 10px 0;
+          }
+        }
+        .library-text {
+          text-align: center;
+          font-size: 30px;
+          font-weight: bold;
+          color: #17381f;
+        }
       }
     }
   }
+
   .text-container {
     text-align: center;
-    .slogan {
+    .slogan1 {
+      height: 60px;
+      width: 250px;
+    }
+    .slogan2 {
       height: 60px;
       width: 450px;
     }
