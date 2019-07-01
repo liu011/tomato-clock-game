@@ -1,6 +1,6 @@
 import { ComponentClass } from "react"
 import Taro, { Component } from "@tarojs/taro"
-import { AtToast, AtCurtain } from "taro-ui"
+import { AtToast, AtCurtain, AtModal, AtModalContent, AtModalAction } from "taro-ui"
 import { connect } from "@tarojs/redux"
 import { isNil } from "lodash"
 import { View, Button, Picker, Image } from "@tarojs/components"
@@ -248,11 +248,13 @@ class Index extends Component {
   }
 
   onChangeA = (e: { detail: { value: string | number } }) => {
+    const stopPoint = this.state.selectorA[e.detail.value].indexOf(" ")
+    const answer = this.state.selectorA[e.detail.value].substring(0, stopPoint)
     this.setState(
       prevState => {
         return {
           ...prevState,
-          selectorCheckedA: this.state.selectorA[e.detail.value],
+          selectorCheckedA: answer,
         }
       },
       () => {
@@ -263,11 +265,13 @@ class Index extends Component {
   }
 
   onChangeB = (e: { detail: { value: string | number } }) => {
+    const stopPoint = this.state.selectorB[e.detail.value].indexOf(" ")
+    const answer = this.state.selectorB[e.detail.value].substring(0, stopPoint)
     this.setState(
       prevState => {
         return {
           ...prevState,
-          selectorCheckedB: this.state.selectorB[e.detail.value],
+          selectorCheckedB: answer,
         }
       },
       () => {
@@ -277,11 +281,13 @@ class Index extends Component {
     )
   }
   onChangeC = (e: { detail: { value: string | number } }) => {
+    const stopPoint = this.state.selectorC[e.detail.value].indexOf(" ")
+    const answer = this.state.selectorC[e.detail.value].substring(0, stopPoint)
     this.setState(
       prevState => {
         return {
           ...prevState,
-          selectorCheckedC: this.state.selectorC[e.detail.value],
+          selectorCheckedC: answer,
         }
       },
       () => {
@@ -311,6 +317,15 @@ class Index extends Component {
       return {
         ...prevState,
         tutorialCurtain: false,
+      }
+    })
+  }
+
+  confirmHarvest() {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        harvestAlert: false,
       }
     })
   }
@@ -378,10 +393,17 @@ class Index extends Component {
           <Image src='http://img1.imgtn.bdimg.com/it/u=2178235260,155430877&fm=15&gp=0.jpg' />
         </AtCurtain>
         <AtToast isOpened={this.state.povertyAlert} text={`原材料需要${ingredientExpense}金币，金币不够啦！`} />
-        <AtToast
-          isOpened={this.state.harvestAlert}
-          text={!isNil(thisFruit) ? `成功收获一枚${thisFruit.name}，获得${thisFruit.value}点能量！` : ""}
-        />
+        <AtModal isOpened={this.state.harvestAlert}>
+          <AtModalContent>
+            <View className='modalText'>成功收获一枚</View>
+            <View className='modalText'>{thisFruit.name}</View>
+            <View className='modalText'>{`获得${thisFruit.value}点能量！`}</View>
+            <Image className='modalImg' src={`https://${thisFruit.image}`} />
+          </AtModalContent>
+          <AtModalAction>
+            <Button onClick={this.confirmHarvest.bind(this)}>OjbK</Button>
+          </AtModalAction>
+        </AtModal>
         <AtToast isOpened={this.state.badTomatoAlert} text='番茄枯萎了' />
         <View className='text-container'>
           <Image className='slogan1' src='https://i.loli.net/2019/07/01/5d199c70736e961784.png' />
