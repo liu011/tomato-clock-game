@@ -16,8 +16,6 @@ import energyIcon from "../../assets/energy.png"
 import growing from "../../assets/growing.png"
 import library from "../../assets/library.png"
 import tutorial from "../../assets/tutorial.png"
-import slogan1 from "../../assets/slogan1.png"
-import slogan2 from "../../assets/slogan2.png"
 
 import "./index.less"
 
@@ -101,9 +99,9 @@ class Index extends Component {
       harvestAlert: false,
       badTomatoAlert: false,
       tutorialCurtain: false,
-      selectorA: this.props.calculateValueReducer.optionsA.map(option => option.name),
-      selectorB: this.props.calculateValueReducer.optionsB.map(option => option.name),
-      selectorC: this.props.calculateValueReducer.optionsC.map(option => option.name),
+      selectorA: this.props.calculateValueReducer.optionsA.map(option => option.name + " " + option.expense + "点能量"),
+      selectorB: this.props.calculateValueReducer.optionsB.map(option => option.name + " " + option.expense + "点能量"),
+      selectorC: this.props.calculateValueReducer.optionsC.map(option => option.name + " " + option.expense + "点能量"),
       selectorCheckedA: "",
       selectorCheckedB: "",
       selectorCheckedC: "",
@@ -386,10 +384,10 @@ class Index extends Component {
         />
         <AtToast isOpened={this.state.badTomatoAlert} text='番茄枯萎了' />
         <View className='text-container'>
-          <Image className='slogan1' src={slogan1} />
+          <Image className='slogan1' src='https://i.loli.net/2019/07/01/5d199c70736e961784.png' />
         </View>
         <View className='text-container'>
-          <Image className='slogan2' src={slogan2} />
+          <Image className='slogan2' src='https://i.loli.net/2019/07/01/5d199c7ca93cf51280.png' />
         </View>
         <View className='image-container'>
           <Image className='image' src={status === "completed" ? `https://${thisFruit.image}` : growing} />
