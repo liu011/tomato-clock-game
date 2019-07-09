@@ -1,12 +1,11 @@
 import { UPDATE_COINS, UPDATE_STATUS } from "../constants/updateGameStatus"
 
 const INIT_STATE = {
-  coins: 0,
+  coins: 10,
   status: "ready",
 }
 
 const updateGameStatusReducer = (state = INIT_STATE, action) => {
-  console.log(action)
   switch (action.type) {
     case UPDATE_COINS:
       return {

@@ -1,4 +1,4 @@
-import Taro, { Component, ComponentClass } from "@tarojs/taro"
+import Taro, { Component, ComponentClass, Config } from "@tarojs/taro"
 import { View, Image, Text } from "@tarojs/components"
 import { AtGrid } from "taro-ui"
 import { connect } from "@tarojs/redux"
@@ -77,7 +77,7 @@ class Library extends Component {
             </View>
             <View>
               <Text className='bold-text'>价值：</Text>
-              {this.state.chosenFruit && this.state.chosenFruit.owned ? this.state.chosenFruit.value : "???"}
+              {this.state.chosenFruit && this.state.chosenFruit.owned ? `${this.state.chosenFruit.value}点能量` : "???"}
             </View>
             <View>
               <Text className='bold-text'>配方：</Text>

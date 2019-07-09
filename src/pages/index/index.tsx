@@ -1,8 +1,7 @@
 import { ComponentClass } from "react"
 import Taro, { Component } from "@tarojs/taro"
-import { AtToast, AtCurtain, AtModal, AtModalContent, AtModalAction } from "taro-ui"
+import { AtToast, AtCurtain, AtModal, AtModalContent, AtModalAction, AtProgress, AtButton } from "taro-ui"
 import { connect } from "@tarojs/redux"
-import { isNil } from "lodash"
 import { View, Button, Picker, Image } from "@tarojs/components"
 import { onUpdateCoins, onUpdateStatus } from "../../actions/updateGameStatus"
 import { onCalculateFruitValue, onCalculateIngredientExpense, onUpdateOwnedFruit } from "../../actions/calculateValue"
@@ -14,6 +13,7 @@ import waterIcon from "../../assets/water.png"
 import earthIcon from "../../assets/earth.png"
 import energyIcon from "../../assets/energy.png"
 import growing from "../../assets/growing.png"
+import withered from "../../assets/withered.png"
 import library from "../../assets/library.png"
 import tutorial from "../../assets/tutorial.png"
 
@@ -152,7 +152,7 @@ class Index extends Component {
         selectorCheckedA: "",
         selectorCheckedB: "",
         selectorCheckedC: "",
-      }
+      }z
     })
     this.props.onUpdateStatus("ready")
   }
@@ -211,12 +211,17 @@ class Index extends Component {
       this.state.selectorCheckedB,
       this.state.selectorCheckedC
     )
+    Taro.request({
+      method: "GET",
+      url: "https://" + this.props.calculateValueReducer.thisFruit.image,
+    })
     //this.badTomato = false
   }
 
   onEnd = () => {
     if (this.props.updateGameStatusReducer.status === "completed") {
       const fruit = this.props.calculateValueReducer.thisFruit
+      console.log(fruit)
       this.props.onUpdateCoins(fruit.value)
       this.props.onUpdateOwnedFruit(fruit.id)
       this.setState(prevState => {
@@ -330,6 +335,15 @@ class Index extends Component {
     })
   }
 
+  onClosebadTomatoAlert() {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        badTomatoAlert: false,
+      }
+    })
+  }
+
   render() {
     const { coins, status } = this.props.updateGameStatusReducer
     const { thisFruit, ingredientExpense } = this.props.calculateValueReducer
@@ -370,58 +384,59 @@ class Index extends Component {
           </View>
         </View>
         <View className='status-container'>
-          <View className='coin-container'>
-            <Image className='icon' src={energyIcon} />
-            能量: {coins}
+          <AtProgress className='progress-bar' percent={100} color='#D4E2CE' strokeWidth={2} isHidePercent />
+          <View className='coin-container'>能量: {coins}</View>
+          <AtProgress className='progress-bar' percent={100} color='#D4E2CE' strokeWidth={2} isHidePercent />
+        </View>
+        <View className='icons-container'>
+          <View className='library-container' onClick={this.onOpenTutorial.bind(this)}>
+            <View className='library-icon'>
+              <Image className='tutorial' src={tutorial} />
+            </View>
+            <View className='library-text'>教程</View>
           </View>
-          <View className='icons-container'>
-            <View className='library-container' onClick={this.onOpenTutorial.bind(this)}>
-              <View className='library-icon'>
-                <Image className='tutorial' src={tutorial} />
-              </View>
-              <View className='library-text'>新手教程</View>
+          <View className='library-container' onClick={this.onNavigateToLibrary}>
+            <View className='library-icon'>
+              <Image className='library' src={library} />
             </View>
-            <View className='library-container' onClick={this.onNavigateToLibrary}>
-              <View className='library-icon'>
-                <Image className='library' src={library} />
-              </View>
-              <View className='library-text'>图鉴</View>
-            </View>
+            <View className='library-text'>图鉴</View>
           </View>
         </View>
         <AtCurtain isOpened={this.state.tutorialCurtain} onClose={this.onCloseTutorial.bind(this)}>
-          <Image src='http://img1.imgtn.bdimg.com/it/u=2178235260,155430877&fm=15&gp=0.jpg' />
+          <Image className='tutorial-image' src='https://i.loli.net/2019/07/06/5d2095fec6f5975326.png' />
         </AtCurtain>
         <AtToast isOpened={this.state.povertyAlert} text={`原材料需要${ingredientExpense}金币，金币不够啦！`} />
         <AtModal isOpened={this.state.harvestAlert}>
           <AtModalContent>
             <View className='modalText'>成功收获一枚</View>
             <View className='modalText'>{thisFruit.name}</View>
-            <View className='modalText'>{`获得${thisFruit.value}点能量！`}</View>
+            <View className='modalText'>{`获得${thisFruit.value}点能量`}</View>
             <Image className='modalImg' src={`https://${thisFruit.image}`} />
           </AtModalContent>
           <AtModalAction>
             <Button onClick={this.confirmHarvest.bind(this)}>OjbK</Button>
           </AtModalAction>
         </AtModal>
-        <AtToast isOpened={this.state.badTomatoAlert} text='番茄枯萎了' />
-        <View className='text-container'>
-          <Image className='slogan1' src='https://i.loli.net/2019/07/01/5d199c70736e961784.png' />
-        </View>
-        <View className='text-container'>
-          <Image className='slogan2' src='https://i.loli.net/2019/07/01/5d199c7ca93cf51280.png' />
-        </View>
+        <AtModal isOpened={this.state.badTomatoAlert}>
+          <AtModalContent>
+            <View className='modalText'>由于你的摸鱼，番茄枯萎了QAQ</View>
+            <Image className='modalImg' src={withered} />
+          </AtModalContent>
+          <AtModalAction>
+            <Button onClick={this.onClosebadTomatoAlert.bind(this)}>OjbK</Button>
+          </AtModalAction>
+        </AtModal>
         <View className='image-container'>
           <Image className='image' src={status === "completed" ? `https://${thisFruit.image}` : growing} />
         </View>
         <Countdown />
         <View className='button-container'>
-          <Button className='single-button' onClick={this.onStart} disabled={this.state.isOnStartDisabled}>
+          <AtButton className='single-button' onClick={this.onStart} disabled={this.state.isOnStartDisabled}>
             种下
-          </Button>
-          <Button className='single-button' onClick={this.onEnd} disabled={this.state.isOnEndDisabled}>
+          </AtButton>
+          <AtButton className='single-button' onClick={this.onEnd} disabled={this.state.isOnEndDisabled}>
             {status === "completed" ? "收获" : "我要摸鱼"}
-          </Button>
+          </AtButton>
         </View>
       </View>
     )

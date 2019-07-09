@@ -4,10 +4,13 @@
 	"description": "tomato-clock",
 	"appid": "wx2f2809ea15e1fb13",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
 		"postcss": false,
-		"minified": false
+		"minified": false,
+		"newFeature": true,
+		"autoAudits": false,
+		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
 	"simulatorType": "wechat",

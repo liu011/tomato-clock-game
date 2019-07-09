@@ -61,47 +61,37 @@ class Countdown extends Component {
       clearInterval(this.timer)
     } else if (currentStatus === "ready") {
       clearInterval(this.timer)
-      this.setState(
-        prevState => {
-          return {
-            ...prevState,
-            minute: 1,
-            second: 0,
-          }
-        },
-        () => console.log(this.state)
-      )
+      this.setState(prevState => {
+        return {
+          ...prevState,
+          minute: 1,
+          second: 0,
+        }
+      })
     }
   }
 
   tick() {
-    console.log("tick once")
     if (this.state.minute === 0 && this.state.second === 0) {
       this.props.onUpdateStatus("completed")
       clearInterval(this.timer)
     } else {
       if (this.state.second === 0) {
-        this.setState(
-          prevState => {
-            return {
-              ...prevState,
-              minute: this.state.minute - 1,
-              second: 59,
-            }
-          },
-          () => console.log(this.state)
-        )
+        this.setState(prevState => {
+          return {
+            ...prevState,
+            minute: this.state.minute - 1,
+            second: 59,
+          }
+        })
       } else {
-        this.setState(
-          prevState => {
-            return {
-              ...prevState,
-              minute: this.state.minute,
-              second: this.state.second - 1,
-            }
-          },
-          () => console.log(this.state)
-        )
+        this.setState(prevState => {
+          return {
+            ...prevState,
+            minute: this.state.minute,
+            second: this.state.second - 1,
+          }
+        })
       }
     }
   }
