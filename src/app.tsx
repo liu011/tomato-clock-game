@@ -21,7 +21,7 @@ class App extends Component {
     pages: ["pages/welcome/index", "pages/index/index", "pages/library/index"],
     window: {
       navigationBarBackgroundColor: "transparent",
-      navigationBarTitleText: "Tomato-App",
+      navigationBarTitleText: "种番茄的番茄钟",
       navigationBarTextStyle: "black",
       backgroundTextStyle: "light",
     },

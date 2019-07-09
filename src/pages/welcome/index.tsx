@@ -44,7 +44,7 @@ class Welcome extends Component {
 
   componentDidShow() {
     this.setState({ progress: 0 })
-    this.timer = setInterval(() => this.tick(), 150)
+    this.timer = setInterval(() => this.tick(), 100)
   }
 
   tick() {
@@ -58,7 +58,7 @@ class Welcome extends Component {
       this.setState(prevState => {
         return {
           ...prevState,
-          progress: prevProgress + 5,
+          progress: prevProgress + 2,
         }
       })
     }

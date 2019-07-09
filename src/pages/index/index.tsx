@@ -1,5 +1,5 @@
 import { ComponentClass } from "react"
-import Taro, { Component } from "@tarojs/taro"
+import Taro, { Component, Config } from "@tarojs/taro"
 import { AtToast, AtCurtain, AtModal, AtModalContent, AtModalAction, AtProgress, AtButton } from "taro-ui"
 import { connect } from "@tarojs/redux"
 import { View, Button, Picker, Image } from "@tarojs/components"
@@ -89,6 +89,10 @@ interface Index {
   })
 )
 class Index extends Component {
+  config: Config = {
+    navigationBarBackgroundColor: "#f8f8f8",
+  }
+
   constructor(props: {} | undefined) {
     super(props)
     this.state = {
