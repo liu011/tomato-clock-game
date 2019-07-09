@@ -1,7 +1,7 @@
 import { UPDATE_COINS, UPDATE_STATUS } from "../constants/updateGameStatus"
 
 const INIT_STATE = {
-  coins: 10,
+  coins: 0,
   status: "ready",
 }
 

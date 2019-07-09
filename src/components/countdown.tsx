@@ -46,7 +46,7 @@ class Countdown extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      minute: 1,
+      minute: 25,
       second: 0,
     }
     this.tick = this.tick.bind(this)
@@ -64,7 +64,7 @@ class Countdown extends Component {
       this.setState(prevState => {
         return {
           ...prevState,
-          minute: 1,
+          minute: 25,
           second: 0,
         }
       })

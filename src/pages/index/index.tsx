@@ -11,7 +11,6 @@ import { Fruit, IngredientOption } from "../../types/type"
 import seedIcon from "../../assets/seed.png"
 import waterIcon from "../../assets/water.png"
 import earthIcon from "../../assets/earth.png"
-import energyIcon from "../../assets/energy.png"
 import growing from "../../assets/growing.png"
 import withered from "../../assets/withered.png"
 import library from "../../assets/library.png"
@@ -349,6 +348,11 @@ class Index extends Component {
     const { thisFruit, ingredientExpense } = this.props.calculateValueReducer
     return (
       <View className='index'>
+        <View className='status-container'>
+          <AtProgress className='progress-bar' percent={100} color='#D4E2CE' strokeWidth={2} isHidePercent />
+          <View className='coin-container'>能量: {coins}</View>
+          <AtProgress className='progress-bar' percent={100} color='#D4E2CE' strokeWidth={2} isHidePercent />
+        </View>
         <View className='icons-container'>
           <View className='single-icon-container' onClick={this.onOpenTutorial.bind(this)}>
             <Image className='tutorial' src={tutorial} />
@@ -358,11 +362,6 @@ class Index extends Component {
             <Image className='library' src={library} />
             <View className='icon-text'>图鉴</View>
           </View>
-        </View>
-        <View className='status-container'>
-          <AtProgress className='progress-bar' percent={100} color='#D4E2CE' strokeWidth={2} isHidePercent />
-          <View className='coin-container'>能量: {coins}</View>
-          <AtProgress className='progress-bar' percent={100} color='#D4E2CE' strokeWidth={2} isHidePercent />
         </View>
         <AtCurtain isOpened={this.state.tutorialCurtain} onClose={this.onCloseTutorial.bind(this)}>
           <Image className='tutorial-image' src='https://i.loli.net/2019/07/06/5d2095fec6f5975326.png' />
