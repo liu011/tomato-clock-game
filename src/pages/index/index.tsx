@@ -349,58 +349,20 @@ class Index extends Component {
     const { thisFruit, ingredientExpense } = this.props.calculateValueReducer
     return (
       <View className='index'>
-        <View className='ingredient'>
-          <View className='selector-container'>
-            <Picker mode='selector' range={this.state.selectorA} onChange={this.onChangeA} value={0}>
-              <View className='picker'>
-                <View className='select-button'>
-                  <Image className='icon' src={seedIcon} />
-                </View>
-                <View className='selected-item'>
-                  {this.state.selectorCheckedA ? this.state.selectorCheckedA : "选择种子"}
-                </View>
-              </View>
-            </Picker>
-            <Picker mode='selector' range={this.state.selectorB} onChange={this.onChangeB} value={0}>
-              <View className='picker'>
-                <View className='select-button'>
-                  <Image className='icon' src={waterIcon} />
-                </View>
-                <View className='selected-item'>
-                  {this.state.selectorCheckedB ? this.state.selectorCheckedB : "选择水源"}
-                </View>
-              </View>
-            </Picker>
-            <Picker mode='selector' range={this.state.selectorC} onChange={this.onChangeC} value={0}>
-              <View className='picker'>
-                <View className='select-button'>
-                  <Image className='icon' src={earthIcon} />
-                </View>
-                <View className='selected-item'>
-                  {this.state.selectorCheckedC ? this.state.selectorCheckedC : "选择土壤"}
-                </View>
-              </View>
-            </Picker>
+        <View className='icons-container'>
+          <View className='single-icon-container' onClick={this.onOpenTutorial.bind(this)}>
+            <Image className='tutorial' src={tutorial} />
+            <View className='icon-text'>教程</View>
+          </View>
+          <View className='single-icon-container' onClick={this.onNavigateToLibrary}>
+            <Image className='library' src={library} />
+            <View className='icon-text'>图鉴</View>
           </View>
         </View>
         <View className='status-container'>
           <AtProgress className='progress-bar' percent={100} color='#D4E2CE' strokeWidth={2} isHidePercent />
           <View className='coin-container'>能量: {coins}</View>
           <AtProgress className='progress-bar' percent={100} color='#D4E2CE' strokeWidth={2} isHidePercent />
-        </View>
-        <View className='icons-container'>
-          <View className='library-container' onClick={this.onOpenTutorial.bind(this)}>
-            <View className='library-icon'>
-              <Image className='tutorial' src={tutorial} />
-            </View>
-            <View className='library-text'>教程</View>
-          </View>
-          <View className='library-container' onClick={this.onNavigateToLibrary}>
-            <View className='library-icon'>
-              <Image className='library' src={library} />
-            </View>
-            <View className='library-text'>图鉴</View>
-          </View>
         </View>
         <AtCurtain isOpened={this.state.tutorialCurtain} onClose={this.onCloseTutorial.bind(this)}>
           <Image className='tutorial-image' src='https://i.loli.net/2019/07/06/5d2095fec6f5975326.png' />
@@ -426,6 +388,40 @@ class Index extends Component {
             <Button onClick={this.onClosebadTomatoAlert.bind(this)}>OjbK</Button>
           </AtModalAction>
         </AtModal>
+        <View className='ingredient'>
+          <View className='selector-container'>
+            <Picker mode='selector' range={this.state.selectorA} onChange={this.onChangeA} value={0}>
+              <View className='pickerA'>
+                <View className='select-button'>
+                  <Image className='icon' src={seedIcon} />
+                </View>
+                <View className='selected-item'>
+                  {this.state.selectorCheckedA ? this.state.selectorCheckedA : "选择种子"}
+                </View>
+              </View>
+            </Picker>
+            <Picker mode='selector' range={this.state.selectorB} onChange={this.onChangeB} value={0}>
+              <View className='pickerB'>
+                <View className='select-button'>
+                  <Image className='icon' src={waterIcon} />
+                </View>
+                <View className='selected-item'>
+                  {this.state.selectorCheckedB ? this.state.selectorCheckedB : "选择水源"}
+                </View>
+              </View>
+            </Picker>
+            <Picker mode='selector' range={this.state.selectorC} onChange={this.onChangeC} value={0}>
+              <View className='pickerC'>
+                <View className='select-button'>
+                  <Image className='icon' src={earthIcon} />
+                </View>
+                <View className='selected-item'>
+                  {this.state.selectorCheckedC ? this.state.selectorCheckedC : "选择土壤"}
+                </View>
+              </View>
+            </Picker>
+          </View>
+        </View>
         <View className='image-container'>
           <Image className='image' src={status === "completed" ? `https://${thisFruit.image}` : growing} />
         </View>

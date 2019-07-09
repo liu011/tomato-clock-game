@@ -12,18 +12,72 @@ page {
     align-items: center;
     margin: 0 50px;
 
-    .picker {
+    .pickerA {
       display: flex;
-      flex-direction: column;
-
+      flex-direction: column-reverse;
+      transform: translate(25px, 125px);
       .select-button {
         padding: 0px 10px;
         margin: 0 50px;
         border-radius: 10px;
-        //border: 3px groove #cab999;
-        //background: radial-gradient(ellipse 200px 70% at 50% 28%, rgb(237, 245, 232) 90%, rgb(211, 224, 205) 90%);
-        //background: #c6e2a365;
-        //box-shadow: 2px 3px 3px 2px #c9c8c8;
+        font-size: 40px;
+        text-align: center;
+        .icon {
+          height: 70px;
+          width: 70px;
+          transform: translateY(10px);
+          background: #b7c7b0;
+          padding: 12px;
+          border-radius: 80px;
+        }
+      }
+      .selected-item {
+        width: 100%;
+        padding: 10px 0px;
+        font-size: 30px;
+        color: #333333;
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    .pickerB {
+      display: flex;
+      flex-direction: column-reverse;
+      transform: translateY(35px);
+      .select-button {
+        padding: 0px 10px;
+        margin: 0 50px;
+        border-radius: 10px;
+        font-size: 40px;
+        text-align: center;
+        .icon {
+          height: 70px;
+          width: 70px;
+          transform: translateY(10px);
+          background: #b7c7b0;
+          padding: 12px;
+          border-radius: 80px;
+        }
+      }
+      .selected-item {
+        width: 100%;
+        padding: 10px 0px;
+        font-size: 30px;
+        color: #333333;
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    .pickerC {
+      display: flex;
+      flex-direction: column-reverse;
+      transform: translate(-25px, 125px);
+      .select-button {
+        padding: 0px 10px;
+        margin: 0 50px;
+        border-radius: 10px;
         font-size: 40px;
         text-align: center;
         .icon {
@@ -73,29 +127,27 @@ page {
     flex-direction: row;
     justify-content: flex-end;
     margin-right: 80px;
-    .library-container {
+    .single-icon-container {
       margin-left: 20px;
-      .library-icon {
-        padding: 0 15px;
-        //border-radius: 10px;
-        //box-shadow: 2px 3px 3px 2px #c9c8c8;
-        font-size: 40px;
-        text-align: center;
-        .library {
-          height: 80px;
-          width: 80px;
-        }
-        .tutorial {
-          height: 65px;
-          width: 58px;
-          padding: 9px 0 10px 0;
-        }
+      .tutorial {
+        border: solid 1px #b7c7b0;
+        //border-radius: 50px;
+        height: 70px;
+        width: 70px;
+        padding: 10px;
       }
-      .library-text {
+      .library {
+        border: solid 1px #b7c7b0;
+        //border-radius: 50px;
+        height: 58px;
+        width: 58px;
+        padding: 15px;
+      }
+      .icon-text {
         text-align: center;
         font-size: 30px;
-        color: #555555;
-        transform: translateY(-18px);
+        color: #777777;
+        transform: translateY(-12px);
       }
     }
   }
@@ -140,7 +192,7 @@ page {
       height: 70px;
       font-size: 35px;
       //border-radius: 10px;
-      background: #bbc7b6;
+      background: #d4ddd0;
       //box-shadow: 1px 2px 2px 1px white;
       /*
       &[disabled] {
